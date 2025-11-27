@@ -34,15 +34,6 @@ namespace CityNest
                     }
                 };
             });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("UserPolicy", policy =>
-                {
-                    policy.RequireRole("User"); 
-                    policy.RequireClaim("User", "true"); 
-                });
-            });
         }
     }
 }

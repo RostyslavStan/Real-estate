@@ -1,18 +1,17 @@
 using CityNest;
+using CityNest.Middlewares;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-
-builder.Services.AddApiAuthentication(builder.Configuration);
-
 builder.Services.AddScoped<IPropertiesServices, PropertiesServices>();
 builder.Services.AddScoped<IPropertiesRepository, PropertiesRepository>();
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+builder.Services.AddApiAuthentication(builder.Configuration);
 builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 
 builder.Services.AddDbContext<RealStateDbContext>();
@@ -50,6 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExeptionHandlingMiddlware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("AllowFrontend");
