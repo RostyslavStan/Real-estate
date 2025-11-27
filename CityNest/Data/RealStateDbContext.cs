@@ -22,7 +22,7 @@ namespace CityNest
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=localhost;Database=RealState;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseNpgsql("Host=db;Port=5432;Database=db;Username=postgres;Password=1111");
         }
     }
 }
